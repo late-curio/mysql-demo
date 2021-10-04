@@ -27,7 +27,7 @@ public class MyRestController {
 
     @GetMapping("/execute")
     public String execute() {
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < threadCount; i++) {
             executor.execute(new DoEet(restTemplate));
         }
         return "Running 100 tasks";

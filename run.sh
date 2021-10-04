@@ -1,5 +1,6 @@
 agent="/opt/newrelic/newrelic.jar"
 config="/opt/newrelic/newrelic.yml"
+#config=/Users/tcrone/conf/disable-mysql.yml
 env="staging"
 jar="build/libs/mysql-demo-0.0.1-SNAPSHOT.jar"
 ./gradlew build
