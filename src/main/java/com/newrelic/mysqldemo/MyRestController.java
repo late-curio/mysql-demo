@@ -2,18 +2,17 @@ package com.newrelic.mysqldemo;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import sun.nio.ch.ThreadPool;
+import org.springframework.web.client.RestTemplate;
 
-import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
 @RestController
 public class MyRestController {
     private final MyService service;
-
+    private final RestTemplate restTemplate = new RestTemplate();
     private final ThreadPoolExecutor executor;
-    private final int threadCount = 4;
+    private final int threadCount = 100;
 
     public MyRestController(MyService service) {
         this.service = service;
@@ -28,10 +27,10 @@ public class MyRestController {
 
     @GetMapping("/execute")
     public String execute() {
-        for (int i = 0; i < 10; i++) {
-            executor.execute(new DoEet(service));
+        for (int i = 0; i < 100; i++) {
+            executor.execute(new DoEet(restTemplate));
         }
-        return "Running 10 tasks";
+        return "Running 100 tasks";
     }
 
     @GetMapping("/terminate")
