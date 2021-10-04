@@ -19,7 +19,6 @@ public class MyService {
 
             statement = conn.createStatement();
             resultSet = statement.executeQuery("Select * from Persons");
-            System.out.println("Got results");
             count = 0;
             while (resultSet.next()) {
                 count++;
@@ -49,6 +48,7 @@ public class MyService {
         }
         long end = System.currentTimeMillis();
         long duration = end - start;
+        System.out.println("Got results in " + duration + "ms");
         return duration;
     }
 }
