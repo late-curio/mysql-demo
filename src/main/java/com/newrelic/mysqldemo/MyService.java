@@ -9,6 +9,7 @@ import java.sql.*;
 public class MyService {
 
     private final ReportGenerator generator;
+    private final Object lock = new Object();
 
     public MyService(ReportGenerator reportGenerator) {
         this.generator = reportGenerator;
@@ -19,10 +20,13 @@ public class MyService {
         Connection conn = null;
         Statement statement = null;
         ResultSet resultSet = null;
+        String databaseProductVersion = null;
         try {
             conn =
                     DriverManager.getConnection("jdbc:mysql://localhost:3306/spring_app_db?useSSL=false&user=root&password=root");
-
+            DatabaseMetaData metaData = conn.getMetaData();
+            databaseProductVersion = metaData.getDatabaseProductVersion();
+            conn.getMetaData().getDatabaseProductName();
             statement = conn.createStatement();
             resultSet = statement.executeQuery("Select * from Persons");
         } catch (SQLException ex) {
@@ -50,7 +54,9 @@ public class MyService {
         }
         long end = System.currentTimeMillis();
         long duration = end - start;
-        generator.log(end, duration);
+        synchronized (lock) {
+            generator.log(end, duration, databaseProductVersion);
+        }
         System.out.println("Got results in " + duration + "ms");
         return duration;
     }

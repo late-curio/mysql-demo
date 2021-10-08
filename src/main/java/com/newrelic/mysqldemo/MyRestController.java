@@ -10,13 +10,17 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 @RestController
 public class MyRestController {
+    private final static String NOTE = "NO_AGENT";
     private final MyService service;
+    private final ReportGenerator reportGenerator;
     private final RestTemplate restTemplate = new RestTemplate();
     private final ThreadPoolExecutor executor;
     private final int threadCount = 100;
 
-    public MyRestController(MyService service) {
+    public MyRestController(MyService service, ReportGenerator reportGenerator) {
         this.service = service;
+        this.reportGenerator = reportGenerator;
+        this.reportGenerator.setNote(NOTE);
         this.executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(threadCount);
     }
 
@@ -31,6 +35,7 @@ public class MyRestController {
         for (int i = 0; i < threadCount; i++) {
             executor.execute(new DoEet(restTemplate));
         }
+        reportGenerator.startSystemLogging();
         return "Running 100 tasks";
     }
 
