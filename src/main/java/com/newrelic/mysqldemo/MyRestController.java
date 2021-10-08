@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -20,7 +21,7 @@ public class MyRestController {
     }
 
     @GetMapping
-    public String getIt() {
+    public String getIt() throws IOException {
         long time = service.doThings();
         return Long.toString(time);
     }

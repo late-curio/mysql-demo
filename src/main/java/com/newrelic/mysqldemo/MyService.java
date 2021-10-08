@@ -2,14 +2,20 @@ package com.newrelic.mysqldemo;
 
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.sql.*;
 
 @Service
 public class MyService {
 
-    public long doThings() {
+    private final ReportGenerator generator;
+
+    public MyService(ReportGenerator reportGenerator) {
+        this.generator = reportGenerator;
+    }
+
+    public long doThings() throws IOException {
         long start = System.currentTimeMillis();
-        int count = -1;
         Connection conn = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -19,10 +25,6 @@ public class MyService {
 
             statement = conn.createStatement();
             resultSet = statement.executeQuery("Select * from Persons");
-            count = 0;
-            while (resultSet.next()) {
-                count++;
-            }
         } catch (SQLException ex) {
             // handle any errors
             System.out.println("SQLException: " + ex.getMessage());
@@ -48,6 +50,7 @@ public class MyService {
         }
         long end = System.currentTimeMillis();
         long duration = end - start;
+        generator.log(end, duration);
         System.out.println("Got results in " + duration + "ms");
         return duration;
     }
