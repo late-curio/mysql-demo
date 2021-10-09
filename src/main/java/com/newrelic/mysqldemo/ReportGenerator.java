@@ -83,7 +83,6 @@ public class ReportGenerator {
     }
 
     public void logMemory(long time, long total, long free, long used) throws IOException {
-        System.out.println("Used memory is " + used);
         systemWriter.append(String.valueOf(time))
                 .append(",")
                 .append(String.valueOf(total))

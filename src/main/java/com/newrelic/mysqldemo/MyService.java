@@ -10,12 +10,20 @@ public class MyService {
 
     private final ReportGenerator generator;
     private final Object lock = new Object();
+    private final static int ITERATIONS = 100;
 
     public MyService(ReportGenerator reportGenerator) {
         this.generator = reportGenerator;
     }
 
     public long doThings() throws IOException {
+        for (int i = 0; i < ITERATIONS; i++) {
+            doThing();
+        }
+        return ITERATIONS;
+    }
+
+    public long doThing() throws IOException {
         long start = System.currentTimeMillis();
         Connection conn = null;
         Statement statement = null;
@@ -57,7 +65,7 @@ public class MyService {
         synchronized (lock) {
             generator.log(end, duration, databaseProductVersion);
         }
-        System.out.println("Got results in " + duration + "ms");
+        //System.out.println("Got results in " + duration + "ms");
         return duration;
     }
 }

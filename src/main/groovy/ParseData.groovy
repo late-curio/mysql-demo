@@ -3,7 +3,10 @@ import java.time.Duration
 //def dir = "/Users/tcrone/temp/mysql/5.7.35-NO_AGENT"
 //def dir = "/Users/tcrone/temp/mysql/8.0.26-NO_AGENT"
 //def dir = "/Users/tcrone/temp/mysql/MYSQL-8.0.26-AGENT-7.0.3"
-def dir = "/Users/tcrone/temp/mysql/MYSQL-5.7.35-AGENT-7.3.0-1633757094808"
+//def dir = "/Users/tcrone/temp/mysql/MYSQL-5.7.35-AGENT-7.3.0-1633757094808"
+
+def dir = "/Users/tcrone/temp/mysql/${args[0]}"
+println "Loading data from $dir"
 
 BigInteger count = 0
 BigInteger sum = 0
@@ -32,9 +35,9 @@ new File("$dir/report.csv").splitEachLine(",") { fields ->
                 mysqlVersion = fields[2]
                 agentVersion = fields[3]
             }
-            if(ms > 999) {
-                println ms
-            }
+//            if(ms > 999) {
+//                println ms
+//            }
         }
 
     }

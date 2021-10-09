@@ -10,12 +10,11 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 @RestController
 public class MyRestController {
-    private final static String NOTE = "7.3.0";
     private final MyService service;
     private final ReportGenerator reportGenerator;
     private final RestTemplate restTemplate = new RestTemplate();
     private final ThreadPoolExecutor executor;
-    private final int threadCount = 100;
+    private final int threadCount = 10;
 
     public MyRestController(MyService service, ReportGenerator reportGenerator) {
         this.service = service;
@@ -35,7 +34,7 @@ public class MyRestController {
             executor.execute(new DoEet(restTemplate));
         }
         reportGenerator.startSystemLogging();
-        return "Running 100 tasks";
+        return "Running " + threadCount + " tasks";
     }
 
     @GetMapping("/terminate")
