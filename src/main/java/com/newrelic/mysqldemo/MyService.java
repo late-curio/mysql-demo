@@ -16,9 +16,13 @@ public class MyService {
         this.generator = reportGenerator;
     }
 
-    public long doThings() throws IOException {
+    public long doThings() {
         for (int i = 0; i < ITERATIONS; i++) {
-            doThing();
+            try {
+                doThing();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return ITERATIONS;
     }
@@ -45,17 +49,23 @@ public class MyService {
         }
         finally {
             try {
-                resultSet.close();
+                if(resultSet != null) {
+                    resultSet.close();
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
             try {
-                statement.close();
+                if(statement != null) {
+                    statement.close();
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
             try {
-                conn.close();
+                if(conn != null) {
+                    conn.close();
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
