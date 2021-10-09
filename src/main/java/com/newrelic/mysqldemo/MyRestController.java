@@ -20,7 +20,6 @@ public class MyRestController {
     public MyRestController(MyService service, ReportGenerator reportGenerator) {
         this.service = service;
         this.reportGenerator = reportGenerator;
-        this.reportGenerator.setNote(NOTE);
         this.executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(threadCount);
     }
 

@@ -8,35 +8,35 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 @Component
 public class ReportGenerator {
 
     private final BufferedWriter writer;
     private final BufferedWriter systemWriter;
-    private String note;
     private String productVersion;
     private boolean agentLoaded = false;
 
-    public void setNote(String note) { this.note = note; }
-
     public ReportGenerator() throws IOException {
+        this.checkForAgent();
         long ts = System.currentTimeMillis();
-        String filename = ts + "-report.csv";
-        String systemLog = ts + "-system.csv";
-        writer = new BufferedWriter(new FileWriter("/Users/tcrone/temp/mysql/" + filename));
+        String filename = "report.csv";
+        String systemLog = "system.csv";
+        String folder = "/Users/tcrone/temp/mysql/" + (agentLoaded ? "AGENT-" : "NO_AGENT-") + ts;
+        Files.createDirectories(Paths.get(folder));
+        writer = new BufferedWriter(new FileWriter( folder + "/" + filename));
         systemWriter = new BufferedWriter(new FileWriter("/Users/tcrone/temp/mysql/" + systemLog));
-        writer.write("timestamp,duration,productVersion,note\n");
-        systemWriter.write("timestamp,total,free,used,productVersion,note\n");
-        this.initialize();
+        writer.write("timestamp,duration,productVersion,agent\n");
+        systemWriter.write("timestamp,total,free,used,productVersion,agent\n");
     }
 
-    public void initialize() {
+    public void checkForAgent() {
         RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
         List<String> jvmArgs = runtimeMXBean.getInputArguments();
         System.out.println("JVM arguments:");
@@ -53,6 +53,10 @@ public class ReportGenerator {
         }
     }
 
+    private String getAgentValue() {
+        return agentLoaded ? "AGENT" : "NO_AGENT";
+    }
+
     public void log(long time, long duration, String productVersion) throws IOException {
         if(this.productVersion == null) {
             this.productVersion = productVersion;
@@ -63,7 +67,7 @@ public class ReportGenerator {
                 .append(",")
                 .append(productVersion)
                 .append(",")
-                .append(note)
+                .append(getAgentValue())
                 .append("\n");
     }
 
@@ -79,7 +83,7 @@ public class ReportGenerator {
                 .append(",")
                 .append(productVersion)
                 .append(",")
-                .append(note)
+                .append(getAgentValue())
                 .append("\n");
     }
 
