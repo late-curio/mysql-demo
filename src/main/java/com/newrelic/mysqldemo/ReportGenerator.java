@@ -6,6 +6,9 @@ import javax.annotation.PreDestroy;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -18,6 +21,7 @@ public class ReportGenerator {
     private final BufferedWriter systemWriter;
     private String note;
     private String productVersion;
+    private boolean agentLoaded = false;
 
     public void setNote(String note) { this.note = note; }
 
@@ -29,6 +33,24 @@ public class ReportGenerator {
         systemWriter = new BufferedWriter(new FileWriter("/Users/tcrone/temp/mysql/" + systemLog));
         writer.write("timestamp,duration,productVersion,note\n");
         systemWriter.write("timestamp,total,free,used,productVersion,note\n");
+        this.initialize();
+    }
+
+    public void initialize() {
+        RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
+        List<String> jvmArgs = runtimeMXBean.getInputArguments();
+        System.out.println("JVM arguments:");
+        for (String arg : jvmArgs) {
+            if (arg.startsWith("-agentpath") || arg.startsWith("-agentlib") || arg.startsWith("-javaagent")) {
+                System.out.print("***** ");
+                System.out.print(arg);
+                System.out.println(" *****");
+                agentLoaded = true;
+            }
+            else {
+                System.out.println(arg);
+            }
+        }
     }
 
     public void log(long time, long duration, String productVersion) throws IOException {
