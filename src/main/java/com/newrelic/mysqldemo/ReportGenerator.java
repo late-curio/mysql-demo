@@ -10,6 +10,8 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -17,6 +19,9 @@ import java.util.concurrent.TimeUnit;
 
 @Component
 public class ReportGenerator {
+
+    private final static String ROOT_DIR = "/Users/tcrone/temp/mysql/";
+    private final static SimpleDateFormat DATE_FMT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 
     private final BufferedWriter writer;
     private final BufferedWriter systemWriter;
@@ -28,10 +33,12 @@ public class ReportGenerator {
         long ts = System.currentTimeMillis();
         String filename = "report.csv";
         String systemLog = "system.csv";
-        String folder = "/Users/tcrone/temp/mysql/" + (agentLoaded ? "AGENT-" : "NO_AGENT-") + ts;
+        Date date = new Date(ts);
+        String dateTimeString = DATE_FMT.format(date);
+        String folder = ROOT_DIR + (agentLoaded ? "AGENT-" : "NO_AGENT-") + dateTimeString;
         Files.createDirectories(Paths.get(folder));
         writer = new BufferedWriter(new FileWriter( folder + "/" + filename));
-        systemWriter = new BufferedWriter(new FileWriter("/Users/tcrone/temp/mysql/" + systemLog));
+        systemWriter = new BufferedWriter(new FileWriter(folder + "/" + systemLog));
         writer.write("timestamp,duration,productVersion,agent\n");
         systemWriter.write("timestamp,total,free,used,productVersion,agent\n");
     }
