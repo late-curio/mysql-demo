@@ -10,7 +10,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 @RestController
 public class MyRestController {
-    private final static String NOTE = "NO_AGENT";
+    private final static String NOTE = "7.3.0";
     private final MyService service;
     private final ReportGenerator reportGenerator;
     private final RestTemplate restTemplate = new RestTemplate();
