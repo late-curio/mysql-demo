@@ -28,15 +28,19 @@ public class ReportGenerator {
     private String productVersion;
     private boolean agentLoaded = false;
 
-    public ReportGenerator() throws IOException {
+    public ReportGenerator(MySQLVersionService mySQLVersionService) throws IOException {
         this.checkForAgent();
         long ts = System.currentTimeMillis();
         String filename = "report.csv";
         String systemLog = "system.csv";
         Date date = new Date(ts);
         String dateTimeString = DATE_FMT.format(date);
-        String folder = ROOT_DIR + (agentLoaded ? "AGENT-" : "NO_AGENT-") + dateTimeString;
+        String mysqlVersion = mySQLVersionService.getVersion();
+        String folder = ROOT_DIR + (agentLoaded ? "AGENT-" : "NO_AGENT-") + mysqlVersion + "-" + dateTimeString;
+        System.out.println("*** Creating directory for log files");
+        System.out.println("*** " + folder);
         Files.createDirectories(Paths.get(folder));
+        System.out.println("*** Done");
         writer = new BufferedWriter(new FileWriter( folder + "/" + filename));
         systemWriter = new BufferedWriter(new FileWriter(folder + "/" + systemLog));
         writer.write("timestamp,duration,productVersion,agent\n");
