@@ -13,7 +13,7 @@ public class MySQLVersionService {
         String databaseProductVersion = null;
         try {
             conn =
-                    DriverManager.getConnection("jdbc:mysql://localhost:3306/spring_app_db?useSSL=false&user=root&password=root");
+                    DriverManager.getConnection("jdbc:mysql://localhost:3306/spring_app_db?allowPublicKeyRetrieval=true&useSSL=false&user=root&password=root");
             DatabaseMetaData metaData = conn.getMetaData();
             databaseProductVersion = metaData.getDatabaseProductVersion();
         } catch (SQLException ex) {
