@@ -20,8 +20,9 @@ public class MyService {
         for (int i = 0; i < ITERATIONS; i++) {
             try {
                 doThing();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
+                i--; // retry essentially
             }
         }
         return ITERATIONS;
