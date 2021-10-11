@@ -5,8 +5,11 @@ import java.time.Duration
 //def dir = "/Users/tcrone/temp/mysql/MYSQL-8.0.26-AGENT-7.0.3"
 //def dir = "/Users/tcrone/temp/mysql/MYSQL-5.7.35-AGENT-7.3.0-1633757094808"
 
-def dir = "/Users/tcrone/temp/mysql/${args[0]}"
+def run = args[0]
+def dir = "/Users/tcrone/temp/mysql/${run}"
 println "Loading data from $dir"
+println "```"
+println run
 
 BigInteger count = 0
 BigInteger sum = 0
@@ -50,3 +53,4 @@ println "Agent version: $agentVersion"
 println "Count of rows: $count"
 println "Elapsed time: $duration"
 println "Average time is: $average"
+println "```"
