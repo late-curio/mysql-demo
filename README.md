@@ -8,6 +8,24 @@ Average time is: 183ms
 Average memory used is: 1055027830
 ```
 ```
+AGENT-5.7.35-2021-10-12T07:17:18.510
+MySQL version: 5.7.35
+Agent version: AGENT
+Count of rows: 1000000
+Elapsed time: PT1H22M52.518S
+Average time is: 49ms
+Average memory used is: 1200930547
+```
+```
+AGENT-5.7.35-2021-10-12T11:07:14.628
+MySQL version: 5.7.35
+Agent version: AGENT
+Count of rows: 1000000
+Elapsed time: PT52M22.316S
+Average time is: 31ms
+Average memory used is: 1015182570
+```
+```
 AGENT-8.0.26-2021-10-09T16:31:52.823
 MySQL version: 8.0.26
 Agent version: AGENT
@@ -42,6 +60,15 @@ Count of rows: 1000000
 Elapsed time: PT41M2.879S
 Average time is: 24ms
 Average memory used is: 1005708749
+```
+```
+NO_AGENT-5.7.35-2021-10-12T12:23:37.102
+MySQL version: 5.7.35
+Agent version: NO_AGENT
+Count of rows: 1000000
+Elapsed time: PT42M33.277S
+Average time is: 25ms
+Average memory used is: 1016525043
 ```
 ```
 NO_AGENT-8.0.26-2021-10-09T13:39:06.961
