@@ -17,14 +17,16 @@ Count of rows: 1000000
 Elapsed time: PT1H6M8.749S
 Average time is: 39
 ```
+
 ```
-NO_AGENT-8.0.26-2021-10-09T13:39:06.961
-MySQL version: 8.0.26
+NO_AGENT-5.7.35-2021-10-11T19:20:24.887
+MySQL version: 5.7.35
 Agent version: NO_AGENT
-Count of rows: 879335
-Elapsed time: PT1H29M25.262S
-Average time is: 56
+Count of rows: 999555
+Elapsed time: PT41M1.708S
+Average time is: 24
 ```
+
 ```
 NO_AGENT-8.0.26-2021-10-10T18:07:43.557
 MySQL version: 8.0.26
