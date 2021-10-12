@@ -1,10 +1,5 @@
 import java.time.Duration
 
-//def dir = "/Users/tcrone/temp/mysql/5.7.35-NO_AGENT"
-//def dir = "/Users/tcrone/temp/mysql/8.0.26-NO_AGENT"
-//def dir = "/Users/tcrone/temp/mysql/MYSQL-8.0.26-AGENT-7.0.3"
-//def dir = "/Users/tcrone/temp/mysql/MYSQL-5.7.35-AGENT-7.3.0-1633757094808"
-
 def run = args[0]
 def dir = "/Users/tcrone/temp/mysql/${run}"
 println "Loading data from $dir"
@@ -48,9 +43,31 @@ new File("$dir/report.csv").splitEachLine(",") { fields ->
 def average = sum.divide(count)
 def elapsedMs = end.subtract(start)
 def duration = Duration.ofMillis(elapsedMs.toLong())
+
+BigInteger sampleCount = 0
+BigInteger memsum = 0
+
+new File("$dir/system.csv").splitEachLine(",") { fields ->
+    if(fields == null || fields.size() < 6) {
+        println "Bad data $fields"
+    }
+    else {
+        def s = fields[3]
+        if(s.isNumber()) {
+            def ms = new BigInteger(s)
+            sampleCount = sampleCount.add(BigInteger.ONE)
+            memsum = memsum.add(ms)
+        }
+
+    }
+}
+
+averageMemory = memsum.divide(sampleCount)
+
 println "MySQL version: $mysqlVersion"
 println "Agent version: $agentVersion"
 println "Count of rows: $count"
 println "Elapsed time: $duration"
-println "Average time is: $average"
+println "Average time is: ${average}ms"
+println "Average memory used is: $averageMemory"
 println "```"
