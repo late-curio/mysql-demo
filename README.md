@@ -28,10 +28,10 @@ Average time is: 24
 ```
 
 ```
-NO_AGENT-8.0.26-2021-10-10T18:07:43.557
+NO_AGENT-8.0.26-2021-10-11T20:38:18.172
 MySQL version: 8.0.26
 Agent version: NO_AGENT
-Count of rows: 930000
-Elapsed time: PT3H27M34.272S
-Average time is: 120
+Count of rows: 999594
+Elapsed time: PT40M37.344S
+Average time is: 24
 ```
