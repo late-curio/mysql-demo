@@ -6,7 +6,15 @@ import java.time.Duration
 File baseDir = new File("/Users/tcrone/temp/mysql")
 println "Loading data from ${baseDir.getName()}"
 
+List<File> files = []
+
 baseDir.eachFile(FileType.DIRECTORIES) { file ->
+    files << file
+}
+
+files.sort { File a, File b -> (a.name <=> b.name) }
+
+files.each { file ->
     doEet(baseDir, file.getName())
 }
 
