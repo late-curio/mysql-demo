@@ -8,6 +8,7 @@ Agent version: AGENT
 Count of rows: 1000000
 Elapsed time: PT5H7M22.915S
 Average time is: 183ms
+Average memory used is: 1055027830
 ```
 ```
 AGENT-8.0.26-2021-10-10T15:29:48.402
@@ -16,6 +17,7 @@ Agent version: AGENT
 Count of rows: 1000000
 Elapsed time: PT1H6M8.749S
 Average time is: 39ms
+Average memory used is: 876404924
 ```
 
 ```
@@ -25,6 +27,7 @@ Agent version: NO_AGENT
 Count of rows: 999555
 Elapsed time: PT41M1.708S
 Average time is: 24ms
+Average memory used is: 1005708749
 ```
 
 ```
@@ -34,4 +37,5 @@ Agent version: NO_AGENT
 Count of rows: 999594
 Elapsed time: PT40M37.344S
 Average time is: 24ms
+Average memory used is: 1151759696
 ```
