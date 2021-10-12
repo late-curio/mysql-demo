@@ -71,6 +71,15 @@ Average time is: 25ms
 Average memory used is: 1016525043
 ```
 ```
+NO_AGENT-5.7.35-2021-10-12T13:13:02.550
+MySQL version: 5.7.35
+Agent version: NO_AGENT
+Count of rows: 1000000
+Elapsed time: PT42M13.67S
+Average time is: 24ms
+Average memory used is: 1028249683
+```
+```
 NO_AGENT-8.0.26-2021-10-09T13:39:06.961
 MySQL version: 8.0.26
 Agent version: NO_AGENT
