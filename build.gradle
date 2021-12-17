@@ -1,5 +1,5 @@
 plugins {
-	id 'org.springframework.boot' version '2.5.5'
+	id 'org.springframework.boot' version '2.6.1'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 	id 'groovy'
@@ -13,6 +13,8 @@ repositories {
 	mavenCentral()
 }
 
+ext['log4j2.version'] = '2.16.0'
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.codehaus.groovy:groovy-all:3.0.8'
@@ -24,4 +26,8 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+}
+
+bootRun {
+	jvmArgs = ["-Dnewrelic.config.file=/Users/tcrone/conf/newrelic.yml", "-Dnewrelic.environment=staging", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005", "-javaagent:/Users/tcrone/lib/nrjars/newrelic-agent-7.5.0-SNAPSHOT.jar"]
 }
