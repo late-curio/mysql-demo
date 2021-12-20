@@ -31,24 +31,20 @@ public class JdbcContentService {
             statement.setString(2, content);
             statement.execute();
         } catch (SQLException ex) {
-            // handle any errors
             printSQLException(ex);
             return -1;
         }
         return id;
     }
 
-    public int createContentViaStatementAndManualSqlConcatenation(String content) throws IOException {
+    public int createContentViaStatementAndManualSqlConcatenation(String content) {
         int id = idGenerator.incrementAndGet();
         DataSource dataSource = Objects.requireNonNull(jdbcTemplate.getDataSource());
         try(Statement statement = dataSource.getConnection().createStatement()) {
             String replacement = "\\'";
-            System.out.println("REPLACEMENT ***" + replacement + "***");
-            content = content.replace("'", replacement);
-            System.out.println("NEWCONTENT=[" + content + "]");
-            statement.execute("insert into content(id, content) values (" + id + ", '" + content + "')");
+            String contentWithEscapedSingleQuotes = content.replace("'", replacement);
+            statement.execute("insert into content(id, content) values (" + id + ", '" + contentWithEscapedSingleQuotes + "')");
         } catch (SQLException ex) {
-            // handle any errors
             printSQLException(ex);
             return -1;
         }
