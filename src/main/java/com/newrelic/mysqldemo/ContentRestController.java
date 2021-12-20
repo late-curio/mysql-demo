@@ -24,15 +24,30 @@ public class ContentRestController {
         return saved.getId().toString();
     }
 
-    @PostMapping("/content/jdbc-statement")
-    public String createContentManually(@RequestBody String content) throws IOException {
-        int id = service.createContentViaStatementAndManualSqlConcatenation(content);
-        return Integer.toString(id);
+    @PutMapping("/content/jpa-repository/{id}")
+    public String createContent(@RequestBody String content, @PathVariable Integer id) {
+        Content updated = new Content();
+        updated.setId(id);
+        updated.setContent(content);
+        Content saved = repository.save(updated);
+        return saved.getId().toString();
     }
 
     @PostMapping("/content/jdbc-prepared-statement")
     public String createContentWithPreparedStatement(@RequestBody String content) throws IOException {
         int id = service.createContentViaPreparedStatement(content);
+        return Integer.toString(id);
+    }
+
+    @PutMapping("/content/jdbc-prepared-statement/{id}")
+    public String updateContentWithPreparedStatement(@RequestBody String content, @PathVariable Integer id) {
+        service.updateContentViaPreparedStatement(id, content);
+        return Integer.toString(id);
+    }
+
+    @PostMapping("/content/jdbc-statement")
+    public String createContentManually(@RequestBody String content) throws IOException {
+        int id = service.createContentViaStatementAndManualSqlConcatenation(content);
         return Integer.toString(id);
     }
 

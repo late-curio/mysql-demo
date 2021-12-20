@@ -4,7 +4,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
-import java.io.IOException;
 import java.sql.*;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -13,6 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class JdbcContentService {
 
     private static final String SQL = "insert into content(id, content) values(?, ?)";
+    private static final String UPDATE_SQL = "update content set content=? where id=?";
 
     private final AtomicInteger preparedIdGenerator = new AtomicInteger(100);
     private final AtomicInteger idGenerator = new AtomicInteger(1000);
@@ -23,12 +23,25 @@ public class JdbcContentService {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public int createContentViaPreparedStatement(String content) throws IOException {
+    public int createContentViaPreparedStatement(String content) {
         int id = preparedIdGenerator.incrementAndGet();
         DataSource dataSource = Objects.requireNonNull(jdbcTemplate.getDataSource());
         try(PreparedStatement statement = dataSource.getConnection().prepareStatement(SQL)) {
             statement.setInt(1, id);
             statement.setString(2, content);
+            statement.execute();
+        } catch (SQLException ex) {
+            printSQLException(ex);
+            return -1;
+        }
+        return id;
+    }
+
+    public int updateContentViaPreparedStatement(int id, String content) {
+        DataSource dataSource = Objects.requireNonNull(jdbcTemplate.getDataSource());
+        try(PreparedStatement statement = dataSource.getConnection().prepareStatement(UPDATE_SQL)) {
+            statement.setString(1, content);
+            statement.setInt(2, id);
             statement.execute();
         } catch (SQLException ex) {
             printSQLException(ex);
