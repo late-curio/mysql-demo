@@ -29,5 +29,5 @@ test {
 }
 
 bootRun {
-	jvmArgs = ["-Dnewrelic.config.file=/Users/tcrone/conf/newrelic.yml", "-Dnewrelic.environment=staging", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005", "-javaagent:/Users/tcrone/lib/nrjars/newrelic-agent-7.5.0-SNAPSHOT.jar"]
+	jvmArgs = ["-Dnewrelic.config.file=/opt/newrelic/newrelic.yml", "-Dnewrelic.environment=staging", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005", "-javaagent:/opt/newrelic/newrelic.jar"]
 }
