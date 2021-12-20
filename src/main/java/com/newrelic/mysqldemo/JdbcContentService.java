@@ -14,8 +14,8 @@ public class JdbcContentService {
 
     private static final String SQL = "insert into content(id, content) values(?, ?)";
 
-    private final AtomicInteger idGenerator = new AtomicInteger(100);
-    private final AtomicInteger preparedIdGenerator = new AtomicInteger(1000);
+    private final AtomicInteger preparedIdGenerator = new AtomicInteger(100);
+    private final AtomicInteger idGenerator = new AtomicInteger(1000);
 
     private final JdbcTemplate jdbcTemplate;
 
