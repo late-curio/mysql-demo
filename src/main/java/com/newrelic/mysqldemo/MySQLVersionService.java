@@ -2,7 +2,6 @@ package com.newrelic.mysqldemo;
 
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.sql.*;
 
 @Service
