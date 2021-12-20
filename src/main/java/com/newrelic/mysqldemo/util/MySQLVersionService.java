@@ -1,4 +1,4 @@
-package com.newrelic.mysqldemo;
+package com.newrelic.mysqldemo.util;
 
 import org.springframework.stereotype.Service;
 
