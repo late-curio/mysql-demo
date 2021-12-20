@@ -12,8 +12,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Service
 public class JdbcContentService {
 
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/spring_app_db?useSSL=false&user=root&password=root";
     private static final String SQL = "insert into content(id, content) values(?, ?)";
+
     private final AtomicInteger idGenerator = new AtomicInteger(100);
     private final AtomicInteger preparedIdGenerator = new AtomicInteger(1000);
 
