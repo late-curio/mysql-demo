@@ -29,8 +29,8 @@ test {
 }
 
 bootRun {
-	jvmArgs = ["-Dnewrelic.config.file=${System.getenv('NRCONFIG') ?: '/opt/newrelic/newrelic.yml'}",
-			   "-Dnewrelic.environment=${System.getenv('NRENV') ?: 'staging'}",
+	jvmArgs = ["-Dnewrelic.config.file=${System.getenv('NRCONFIG')}",
+			   "-Dnewrelic.environment=${System.getenv('NRENV')}",
 			   '-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005',
-			   "-javaagent:${System.getenv('NRAGENT') ?: '/opt/newrelic/newrelic.jar'}"]
+			   "-javaagent:${System.getenv('NRAGENT')}"]
 }
