@@ -25,28 +25,12 @@ public class JdbcContentService {
 
     public int createContentViaPreparedStatement(String content) {
         int id = preparedIdGenerator.incrementAndGet();
-        DataSource dataSource = Objects.requireNonNull(jdbcTemplate.getDataSource());
-        try(PreparedStatement statement = dataSource.getConnection().prepareStatement(SQL)) {
-            statement.setInt(1, id);
-            statement.setString(2, content);
-            statement.execute();
-        } catch (SQLException ex) {
-            printSQLException(ex);
-            return -1;
-        }
+        jdbcTemplate.update(SQL, id, content);
         return id;
     }
 
     public int updateContentViaPreparedStatement(int id, String content) {
-        DataSource dataSource = Objects.requireNonNull(jdbcTemplate.getDataSource());
-        try(PreparedStatement statement = dataSource.getConnection().prepareStatement(UPDATE_SQL)) {
-            statement.setString(1, content);
-            statement.setInt(2, id);
-            statement.execute();
-        } catch (SQLException ex) {
-            printSQLException(ex);
-            return -1;
-        }
+        jdbcTemplate.update(UPDATE_SQL, content, id);
         return id;
     }
 
